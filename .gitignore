@@ -1,0 +1,16 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+*$py.class
+
+.venv/
+venv/
+env/
+.pycache-test/
+
+.vscode/
+
+output/*
+!output/.gitkeep
+examples/output/*
+!examples/output/.gitkeep
