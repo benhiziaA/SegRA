@@ -113,6 +113,24 @@ examples/input/real_architecture.json
 
 Each input file should contain an `asp_facts` list.
 
+The intended architecture used in the SegRA evaluation is generated using
+Game of Zones (GoZ), an automated intent-based network micro-segmentation
+methodology.
+
+SegRA is a separate verification tool. It does not generate the intended
+architecture itself; instead, it takes the GoZ-generated architecture as input
+and assesses a deployed architecture against it.
+
+The GoZ source code is not included or redistributed in this repository.
+
+Related publication:
+
+D. Canavese, R. Laborde, A. Laraba, A. Ferreira, and A. Benzekri,
+“Game of Zones: An Automated Intent-Based Network Micro-segmentation
+Methodology,” IEEE/IFIP NOMS 2025.
+
+HAL: https://hal.science/hal-04948011v1
+
 A minimal example is:
 
 ```json
