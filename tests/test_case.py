@@ -1,3 +1,5 @@
+# Copyright 2026 SegRA copyright holders.
+# SPDX-License-Identifier: Apache-2.0
 from pathlib import Path
 
 from segra.comparator import evaluate_architecture
