@@ -1,22 +1,40 @@
 # SegRA
 
-SegRA is a Python tool for evaluating a real segmented network architecture against an optimal architecture. It compares asset placement, defense-in-depth structure, and security controls, then generates both a structured JSON report and a human-readable PDF report.
+SegRA is a deterministic research verifier for assessing whether a deployed
+network segmentation architecture conforms to an intended architecture.
+
+Given an intended architecture and its deployed realisation, SegRA identifies:
+
+- exact zone mappings;
+- valid segmentation refinements;
+- missing or incorrectly placed assets;
+- defense-in-depth deviations; and
+- missing or inconsistent security controls.
+
+SegRA produces a machine-readable JSON report and a detailed PDF report.
+
+> SegRA is a research prototype and is not intended to replace a production
+> network-security audit.
 
 ## Features
 
-- Compares optimal and real network zones
-- Detects correctly placed, misplaced, missing, and wrongly placed assets
-- Evaluates defense-in-depth distance from external domains
-- Classifies mapped zones as well located, overprotected, overexposed, or unmapped
-- Compares required and implemented security controls
-- Generates JSON and PDF evaluation reports
-- Supports inputs that contain an `asp_facts` list
-- Supports serialized realm JSON inputs
+* Compares intended and deployed network zones
+* Detects correctly and wrongly placed assets
+* Evaluates defense-in-depth distance from external domains
+* Classifies mapped zones as well located, overprotected, overexposed
+* Compares required and implemented security controls
+* Generates JSON and PDF evaluation reports
+* Supports JSON inputs containing an `asp_facts` list
+* Supports serialized realm JSON inputs
+
 
 ## Project Structure
 
 ```text
 SegRA/
+├── .github/
+│   └── workflows/
+│       └── tests.yml
 ├── src/
 │   └── segra/
 │       ├── __init__.py
@@ -27,55 +45,101 @@ SegRA/
 │   │   ├── optimal_architecture.json
 │   │   └── real_architecture.json
 │   └── output/
-│       ├── evaluation_report.json
-│       └── evaluation_report.pdf
-├── requirements.txt
+│       └── .gitkeep
+├── tests/
+│   ├── data/
+│   │   └── test_case/
+│   │       ├── optimal_architecture.json
+│   │       └── real_architecture.json
+│   └── test_case.py
+├── AUTHORS
+├── CITATION.cff
 ├── LICENSE
 ├── NOTICE
-└── README.md
+├── README.md
+├── codemeta.json
+└── pyproject.toml
+└── requirements.txt
 ```
 
 ## Requirements
 
-- Python 3.9 or newer
-- ReportLab
+* Python 3.11 or newer
+* ReportLab 4.x
 
-Install the required dependency:
+## Installation
+
+Clone the repository and enter the project directory:
 
 ```bash
-python3 -m pip install -r requirements.txt
+git clone https://github.com/benhiziaA/SegRA.git
+cd SegRA
+```
+
+Create and activate a virtual environment:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+On Windows:
+
+```bash
+.venv\Scripts\activate
+```
+
+Install SegRA:
+
+```bash
+python -m pip install --upgrade pip
+pip install -e .
+```
+
+To install the development and testing dependencies:
+
+```bash
+pip install -e ".[dev]"
 ```
 
 ## Input Files
 
-By default, SegRA reads the example input files:
+By default, SegRA reads:
 
 ```text
 examples/input/optimal_architecture.json
 examples/input/real_architecture.json
 ```
 
-Each input file should contain an `asp_facts` list. A minimal example is shown below:
+Each input file should contain an `asp_facts` list.
+
+A minimal example is:
 
 ```json
 {
   "type": "RealmLike",
   "stage": "example",
   "asp_facts": [
-    "zone(zone1).",
+    "zone(normal, zone1).",
+    "networkFunction(business, webServer).",
     "inZone(zone1, webServer)."
   ]
 }
 ```
 
-SegRA can also load serialized realm JSON and extract the required architecture facts from it.
+SegRA can also load supported serialized realm JSON files and extract the architecture facts required for evaluation.
 
 ## Usage
 
-Run SegRA from the project root with the default example paths:
+Run SegRA from the project root using the default example paths:
 
 ```bash
-python3 -m src.segra.main
+python -m segra.main
+```
+or
+
+```bash
+segra
 ```
 
 This generates:
@@ -85,26 +149,20 @@ examples/output/evaluation_report.json
 examples/output/evaluation_report.pdf
 ```
 
-The entrypoint can also be run directly:
+Use custom architecture and report paths:
 
 ```bash
-python3 src/segra/main.py
-```
-
-Use custom files when evaluating another architecture:
-
-```bash
-python3 -m src.segra.main \
+python -m segra.main \
   --optimal-json path/to/optimal_architecture.json \
   --real-json path/to/real_architecture.json \
   --report-json path/to/evaluation_report.json \
   --report-pdf path/to/evaluation_report.pdf
 ```
 
-Alternatively, use a custom input or output directory:
+Alternatively, specify custom input and output directories:
 
 ```bash
-python3 -m src.segra.main \
+python -m segra.main \
   --input-dir path/to/input \
   --output-dir path/to/output
 ```
@@ -113,56 +171,105 @@ python3 -m src.segra.main \
 
 ### Phase 1: Zone Mapping and Asset Placement
 
-SegRA maps each optimal zone to one or more real zones and evaluates asset placement. Assets are classified as:
+SegRA maps each intended zone to one or more deployed zones and evaluates asset placement.
 
-- `good`: the asset is present in the expected mapped zone
-- `wrong`: the asset is present in the mapped zone but does not belong there
-- `miss`: the asset is expected but missing from the mapped zone
+Assets are classified as:
+
+* `good`: the asset is present in the expected mapped zone
+* `wrong`: the asset is present in the mapped zone but does not belong there
+* `miss`: the asset is expected but is absent from the mapped zone
 
 The report also includes a summary of misplaced assets.
 
 ### Phase 2: Defense-in-Depth Evaluation
 
-SegRA computes zone depth as the distance from the nearest reachable external domain. It compares the real depth against the optimal depth and classifies each mapped zone as:
+SegRA computes the depth of each zone as its distance from the nearest reachable external domain.
 
-- `well_located`: the real depth matches the optimal depth
-- `over_protected`: the real zone is deeper than expected
-- `overexposed`: the real zone is closer to an external domain than expected
-- `no_mapping_available`: no real zone mapping is available
+It compares the deployed depth with the intended depth and classifies each mapped zone as:
 
-### Phase 3: Security Control Evaluation
+* `well_located`: the deployed depth matches the intended depth
+* `over_protected`: the deployed zone is deeper than intended
+* `overexposed`: the deployed zone is closer to an external domain than intended
 
-SegRA compares the security controls required by the optimal architecture with the controls available in the real architecture. The PDF report summarizes controls as:
 
-- required controls available
-- missed controls
-- unneeded controls
+### Phase 3: Security-Control Evaluation
+
+SegRA compares the security controls required by the intended architecture with those present in the deployed architecture.
+
+The report identifies:
+
+* required controls that are available
+* required controls that are missing
+* implemented controls that are not required by the intended architecture
 
 ## Outputs
 
-The JSON report contains structured evaluation data for all three phases:
+The JSON report contains structured results for all three evaluation phases. The PDF report contains readable tables covering:
 
-```text
-stage
-evaluated_at
-step1_before
-step2_before
-step3_before
+* zone mappings and classifications
+* missing and wrongly placed assets
+* defense-in-depth distances and exposure classifications
+* required, missing, and additional security controls
+
+## Testing
+
+Install the development dependencies:
+
+```bash
+pip install -e ".[dev]"
 ```
 
-The PDF report contains readable tables for:
+Run the complete test suite:
 
-- zone classification
-- misplaced assets
-- depth and exposure
-- security controls
+```bash
+pytest -v
+```
 
-The PDF report does not include local file paths.
+The tests validate the generated architecture case and verify:
+
+* zone mapping and asset-placement results
+* defense-in-depth classifications
+* security-control findings
+* JSON and PDF report generation
+
+Tests are also executed automatically through GitHub Actions after pushes and pull requests.
+
+## Reproducibility
+
+The architecture files under `examples/input/` provide a complete executable evaluation example.
+
+To reproduce the example:
+
+```bash
+python -m segra.main
+```
+
+To validate the generated test case automatically:
+
+```bash
+pytest -v
+```
+
+The same deterministic inputs produce the same evaluation classifications and structured JSON results.
+
+## Limitations
+
+SegRA is a research prototype.
+
+* Its results depend on the correctness and completeness of the input architecture descriptions.
+* It evaluates modeled architecture properties and does not inspect live network traffic.
+* It supports the architecture facts and security-control representations documented in this repository.
+* The implementation has not been hardened for untrusted or malicious input files.
 
 ## License
 
-This project is released under the license included in the `LICENSE` file.
+SegRA is released under the Apache License 2.0. See the `LICENSE` and `NOTICE` files for details.
 
-## Notice
+## Research Status
 
-This software is part of an ongoing scientific research project. The associated research paper is currently under review.
+SegRA is part of an ongoing scientific research project. A manuscript describing SegRA is being prepared for submission.
+
+## Affiliations
+
+This research was conducted at IRIT — Institut de Recherche en Informatique
+de Toulouse, CNRS, Université de Toulouse.

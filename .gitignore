@@ -1,15 +1,30 @@
+# macOS
 .DS_Store
+__MACOSX/
+
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
+*.egg-info/
+build/
+dist/
 
+# Tests and tools
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
 .venv/
 venv/
 env/
-.pycache-test/
 
+# Editors
 .vscode/
+.idea/
 
+# Generated reports
 output/*
 !output/.gitkeep
 examples/output/*

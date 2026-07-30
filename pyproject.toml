@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "segra"
+version = "0.1.2"
+description = "A deterministic verifier for assessing deployed network segmentation architectures against an intended architecture."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+authors = [
+    { name = "Abir Benhizia" }
+]
+dependencies = [
+    "reportlab>=4.0,<5.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8,<9"
+]
+
+[project.urls]
+Repository = "https://github.com/benhiziaA/SegRA"
+Issues = "https://github.com/benhiziaA/SegRA/issues"
+
+[project.scripts]
+segra = "segra.main:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

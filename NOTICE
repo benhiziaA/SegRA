@@ -1,9 +1,9 @@
 SegRA
-Copyright (c) 2026 SegRA contributors
 
-This software is part of an ongoing scientific research project.
+SegRA is research software developed by Abir Benhizia at IRIT,
+CNRS, Université de Toulouse.
 
-The source distribution does not include third-party source code.
-Required Python dependencies are installed separately using requirements.txt.
+Copyright 2026 SegRA copyright holders.
 
-The associated research paper is currently under review.
+Licensed under the Apache License, Version 2.0.
+See the LICENSE file for the complete license terms.

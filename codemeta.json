@@ -1,0 +1,88 @@
+{
+  "@context": "https://w3id.org/codemeta/3.1",
+  "@type": "SoftwareSourceCode",
+  "name": "SegRA",
+  "version": "0.1.2",
+  "description": "SegRA is a deterministic research verifier for assessing whether a deployed network segmentation architecture conforms to an intended architecture.",
+  "applicationCategory": "Cybersecurity",
+  "codeRepository": "https://github.com/benhiziaA/SegRA.git",
+  "issueTracker": "https://github.com/benhiziaA/SegRA/issues",
+  "license": "https://spdx.org/licenses/Apache-2.0",
+  "dateCreated": "2026-03-18",
+  "dateModified": "2026-07-30",
+  "datePublished": "2026-07-30",
+  "programmingLanguage": "Python",
+  "runtimePlatform": "CPython 3.11 or later",
+  "operatingSystem": [
+    "Linux",
+    "macOS"
+  ],
+  "developmentStatus": "active",
+  "keywords": [
+    "cybersecurity",
+    "network segmentation",
+    "network architecture",
+    "architecture assessment",
+    "security verification",
+    "defense in depth"
+  ],
+  "author": [
+    {
+      "@id": "https://orcid.org/0000-0002-4302-1624",
+      "@type": "Person",
+      "givenName": "Abir",
+      "familyName": "Benhizia",
+      "email": "abir.benhizia@irit.fr",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "IRIT, CNRS, Université de Toulouse"
+      }
+    }
+  ],
+  "maintainer": [
+    {
+      "@id": "https://orcid.org/0000-0002-4302-1624",
+      "@type": "Person",
+      "givenName": "Abir",
+      "familyName": "Benhizia",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "IRIT, CNRS, Université de Toulouse"
+      }
+    }
+  ],
+  "contributor": [
+    {
+      "@id": "https://orcid.org/0000-0002-0943-6180",
+      "@type": "Person",
+      "givenName": "Romain",
+      "familyName": "Laborde",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "Institut de Recherche en Informatique de Toulouse, Université de Toulouse"
+      }
+    },
+    {
+      "@type": "Person",
+      "givenName": "Abir",
+      "familyName": "Laraba",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "Institut de Recherche en Informatique de Toulouse, Université de Toulouse"
+      }
+    },
+    {
+      "@type": "Person",
+      "givenName": "Mohamed-Ali",
+      "familyName": "Kandi",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "Institut de Recherche en Informatique de Toulouse, Université de Toulouse"
+      }
+    }
+  ],
+  "softwareRequirements": [
+    "Python >= 3.11",
+    "ReportLab >= 4.0, < 5.0"
+  ]
+}

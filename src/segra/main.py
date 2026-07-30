@@ -1,4 +1,4 @@
-# Copyright 2026 SegRA contributors
+# Copyright 2026 SegRA copyright holders.
 # SPDX-License-Identifier: Apache-2.0
 import argparse
 from pathlib import Path
