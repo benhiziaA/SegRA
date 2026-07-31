@@ -283,6 +283,14 @@ SegRA is a research prototype.
 
 SegRA is released under the Apache License 2.0. See the `LICENSE` and `NOTICE` files for details.
 
+## Archival
+
+SegRA version `0.1.2` is preserved in the Software Heritage archive.
+
+- Release: `v0.1.2`
+- SWHID: [`swh:1:dir:ef729e9d63bbc50087fbd654ec40db660fe30751`](https://archive.softwareheritage.org/swh:1:dir:ef729e9d63bbc50087fbd654ec40db660fe30751;origin=https://github.com/benhiziaA/SegRA.git;visit=swh:1:snp:574d2770e64ca10112a6468b760eb6a447964f8e;anchor=swh:1:rev:a2e38a30f438c9162b662cdfbec35b79cac7258d)
+- Source repository: https://github.com/benhiziaA/SegRA
+
 ## Research Status
 
 SegRA is part of an ongoing scientific research project. A manuscript describing SegRA is being prepared for submission.
