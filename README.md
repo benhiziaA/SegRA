@@ -2,7 +2,7 @@
 
 [![Tests](https://github.com/benhiziaA/SegRA/actions/workflows/tests.yml/badge.svg)](https://github.com/benhiziaA/SegRA/actions/workflows/tests.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
-[![Software Heritage](https://archive.softwareheritage.org/swh:1:dir:ef729e9d63bbc50087fbd654ec40db660fe30751;origin=https://github.com/benhiziaA/SegRA.git;visit=swh:1:snp:574d2770e64ca10112a6468b760eb6a447964f8e;anchor=swh:1:rev:a2e38a30f438c9162b662cdfbec35b79cac7258d)
+[![SWH](https://archive.softwareheritage.org/badge/swh:1:dir:ef729e9d63bbc50087fbd654ec40db660fe30751/)](https://archive.softwareheritage.org/swh:1:dir:ef729e9d63bbc50087fbd654ec40db660fe30751;origin=https://github.com/benhiziaA/SegRA.git;visit=swh:1:snp:574d2770e64ca10112a6468b760eb6a447964f8e;anchor=swh:1:rev:a2e38a30f438c9162b662cdfbec35b79cac7258d)
 
 SegRA is a deterministic research verifier for assessing whether a deployed
 network segmentation architecture conforms to an intended architecture.
